@@ -1,4 +1,4 @@
-package com.cardmatcher.backend.model;
+package com.cardmatcher.backend.models;
 
 import java.util.List;
 
@@ -33,11 +33,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // Una lista para las cartas que desea obtener
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private CardList wantedList;
 
-    // Una lista para las cartas que está dispuesto a intercambiar
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private CardList offeredList;
 

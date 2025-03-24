@@ -1,4 +1,4 @@
-package com.cardmatcher.backend.model;
+package com.cardmatcher.backend.models;
 
 import java.util.List;
 
@@ -25,12 +25,10 @@ public class CardList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Relación con el usuario
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // Una lista de cartas
     @ManyToMany
     @JoinTable(
         name = "cards_in_lists",
@@ -43,9 +41,9 @@ public class CardList {
     @Column(nullable = false)
     private ListType listType;
 
-    // Enum para los tipos de lista (wanted o offered)
+
     public enum ListType {
-        WANTED,  // Cartas que el usuario quiere obtener
-        OFFERED    // Cartas que el usuario está dispuesto a intercambiar
+        WANTED,  
+        OFFERED   
     }
 }

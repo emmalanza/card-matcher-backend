@@ -1,10 +1,8 @@
-package com.cardmatcher.backend.model;
+package com.cardmatcher.backend.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,11 +15,8 @@ import lombok.Data;
 public class Card {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(nullable = false, unique = true)
-    private String localId;
+    private String id;
 
     @Column(nullable = false)
     private String name;
@@ -43,7 +38,6 @@ public class Card {
     @Column(nullable = false)
     private Rarity rarity;
 
-    // Enum para los tipos rareza
     public enum Rarity {
         DIAMOND_1,
         DIAMOND_2,
