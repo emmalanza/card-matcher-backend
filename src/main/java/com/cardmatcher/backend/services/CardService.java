@@ -79,4 +79,8 @@ public class CardService {
             }
         }
     }
+
+    public List<Card> getCardsBySetId(String setId) {
+        return cardRepository.findBySetId(setId);
+    }
 }
