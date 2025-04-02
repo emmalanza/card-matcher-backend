@@ -26,7 +26,7 @@ public class SetService {
     }
 
     public void loadSetsFromAPI() {
-        String[] setIds = { "A2", "A1", "A1a", "A2a", "P-A" };
+        String[] setIds = { "A2", "A1", "A1a", "A2a", "A2b", "P-A" };
 
         for (String setId : setIds) {
             String url = BASE_URL + setId;

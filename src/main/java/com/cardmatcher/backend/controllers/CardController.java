@@ -26,7 +26,7 @@ public class CardController {
         return "Cards loaded!";
     }
 
-     @GetMapping("/api/cards")
+    @GetMapping("/api/cards")
     public List<Card> getCardsBySetId(@RequestParam String setId) {
         return cardService.getCardsBySetId(setId);
     }
