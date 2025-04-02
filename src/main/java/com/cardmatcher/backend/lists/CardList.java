@@ -1,7 +1,9 @@
-package com.cardmatcher.backend.models;
+package com.cardmatcher.backend.lists;
 
 import java.util.List;
 
+import com.cardmatcher.backend.cards.Card;
+import com.cardmatcher.backend.users.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

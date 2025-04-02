@@ -1,12 +1,10 @@
-package com.cardmatcher.backend.services;
+package com.cardmatcher.backend.sets;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import com.cardmatcher.backend.models.Set;
-import com.cardmatcher.backend.models.dtos.SetDTO;
-import com.cardmatcher.backend.repositories.SetRepository;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +24,7 @@ public class SetService {
     }
 
     public void loadSetsFromAPI() {
-        String[] setIds = { "A2", "A1", "A1a", "A2a", "P-A" };
+        String[] setIds = { "A2", "A1", "A1a", "A2a", "A2b", "P-A" };
 
         for (String setId : setIds) {
             String url = BASE_URL + setId;

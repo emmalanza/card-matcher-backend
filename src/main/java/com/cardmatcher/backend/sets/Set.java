@@ -1,4 +1,4 @@
-package com.cardmatcher.backend.models;
+package com.cardmatcher.backend.sets;
 
 import java.time.LocalDate;
 

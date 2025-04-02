@@ -1,10 +1,7 @@
-package com.cardmatcher.backend.services;
+package com.cardmatcher.backend.cards;
 
-import com.cardmatcher.backend.models.Card;
-import com.cardmatcher.backend.models.Set;
-import com.cardmatcher.backend.models.dtos.CardDTO;
-import com.cardmatcher.backend.repositories.CardRepository;
-import com.cardmatcher.backend.repositories.SetRepository;
+import com.cardmatcher.backend.sets.Set;
+import com.cardmatcher.backend.sets.SetRepository;
 import com.cardmatcher.backend.utils.RarityMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -49,29 +46,29 @@ public class CardService {
 
                 try {
 
-                   CardDTO cardResponse = objectMapper.readValue(rawJsonResponse, CardDTO.class);
+                    CardDTO cardResponse = objectMapper.readValue(rawJsonResponse, CardDTO.class);
 
-                   if (cardResponse != null) {
-                    Optional<Card> existingCard = cardRepository.findById(cardResponse.getId());
-                       if (existingCard.isEmpty()) {
-                           Card card = new Card();
-                           card.setName(cardResponse.getName());
-                           card.setId(cardResponse.getId());
-                           card.setImgUrl(cardResponse.getImgUrl());
-                           card.setCategory(cardResponse.getCategory());
+                    if (cardResponse != null) {
+                        Optional<Card> existingCard = cardRepository.findById(cardResponse.getId());
+                        if (existingCard.isEmpty()) {
+                            Card card = new Card();
+                            card.setName(cardResponse.getName());
+                            card.setId(cardResponse.getId());
+                            card.setImgUrl(cardResponse.getImgUrl());
+                            card.setCategory(cardResponse.getCategory());
                             card.setRarity(RarityMapper.mapRarity(cardResponse.getRarity()));
-                           card.setIsInterchangeable(); 
-                           card.setSet(set);
+                            card.setIsInterchangeable();
+                            card.setSet(set);
 
-                           cardRepository.save(card);
-                           System.out.println("Card loaded: " + cardResponse.getName());
-                       } else {
-                           System.out.println("Card " + cardResponse.getId() + " already exists.");
-                       }
-                   } else {
-                    System.out.println("Err loading card with ID: " + setId + "-" + cardNumber);
-                   }
-                
+                            cardRepository.save(card);
+                            System.out.println("Card loaded: " + cardResponse.getName());
+                        } else {
+                            System.out.println("Card " + cardResponse.getId() + " already exists.");
+                        }
+                    } else {
+                        System.out.println("Err loading card with ID: " + setId + "-" + cardNumber);
+                    }
+
                 } catch (Exception e) {
                     System.err.println("Err getting card with URL: " + url);
                     e.printStackTrace();

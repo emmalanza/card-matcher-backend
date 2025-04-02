@@ -1,4 +1,4 @@
-package com.cardmatcher.backend.models.dtos;
+package com.cardmatcher.backend.sets;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,6 +1,5 @@
-package com.cardmatcher.backend.controllers;
+package com.cardmatcher.backend.sets;
 
-import com.cardmatcher.backend.services.SetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

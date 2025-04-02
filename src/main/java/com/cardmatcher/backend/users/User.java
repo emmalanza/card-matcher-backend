@@ -1,6 +1,9 @@
-package com.cardmatcher.backend.models;
+package com.cardmatcher.backend.users;
 
 import java.util.List;
+
+import com.cardmatcher.backend.cards.Card;
+import com.cardmatcher.backend.lists.CardList;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,6 +35,9 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private boolean isActive;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private CardList wantedList;
