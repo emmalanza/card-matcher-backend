@@ -3,10 +3,15 @@ package com.cardmatcher.backend.controllers;
 import com.cardmatcher.backend.security.JwtUtil;
 import com.cardmatcher.backend.services.UserService;
 import com.cardmatcher.backend.models.User;
+import com.cardmatcher.backend.models.dtos.LoginRequestDTO;
+
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,16 +33,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        String token = jwtUtil.generateToken(userDetails.getUsername());
-
-        return ResponseEntity.ok(token);
-    }
- @PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         try {
 
@@ -45,6 +41,23 @@ public class AuthController {
             return ResponseEntity.ok("Usuario registrado exitosamente. Ahora, por favor, inicie sesión.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO request) {
+        try {
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+            );
+
+            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+            String token = jwtUtil.generateToken(userDetails.getUsername());
+
+            return ResponseEntity.ok(Collections.singletonMap("token", token));
+
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
         }
     }
 }
