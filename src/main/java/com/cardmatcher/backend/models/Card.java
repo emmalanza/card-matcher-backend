@@ -46,10 +46,13 @@ public class Card {
         STAR_1,
         STAR_2,
         STAR_3,
+        SHINY_1,
+        SHINY_2,
         CROWN,
         PROMO 
     }
 
+    //WARNING: maybe in the future the rules change
     public boolean canBeExchanged() {
         return rarity == Rarity.DIAMOND_1 || rarity == Rarity.DIAMOND_2 || rarity == Rarity.DIAMOND_3 || rarity == Rarity.DIAMOND_4 || rarity == Rarity.STAR_1;
     }
