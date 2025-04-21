@@ -2,6 +2,8 @@ package com.cardmatcher.backend.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -29,6 +31,7 @@ public class CardList {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference 
     private User user;
 
     @ManyToMany

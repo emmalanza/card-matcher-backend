@@ -1,17 +1,13 @@
 package com.cardmatcher.backend.services;
 
 import com.cardmatcher.backend.models.CardList;
-import com.cardmatcher.backend.models.Role;
 import com.cardmatcher.backend.models.User;
 import com.cardmatcher.backend.repositories.UserRepository;
-import com.cardmatcher.backend.repositories.RoleRepository;
 import com.cardmatcher.backend.repositories.CardListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class UserService {
@@ -19,8 +15,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    // @Autowired
+    // private RoleRepository roleRepository;
 
     @Autowired
     private CardListRepository cardListRepository;
@@ -42,12 +38,12 @@ public class UserService {
     
         user.setActive(true);
 
-        Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(Role.RoleName.USER);
-        if (userRole != null) {
-            roles.add(userRole);
-        }
-        user.setRoles(roles);
+        // Set<Role> roles = new HashSet<>();
+        // Role userRole = roleRepository.findByName(Role.RoleName.USER);
+        // if (userRole != null) {
+        //     roles.add(userRole);
+        // }
+        // user.setRoles(roles);
 
         User savedUser = userRepository.save(user);
         
