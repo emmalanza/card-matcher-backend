@@ -13,4 +13,6 @@ public interface CardRepository extends JpaRepository<Card, String> {
     Optional<Card> findById(String id);  
 
     List<Card> findBySetId(String set);
+
+    List<Card> findByIsInterchangeableTrue();
 }

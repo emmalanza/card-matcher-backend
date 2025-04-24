@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
@@ -36,6 +37,7 @@ public class CardList {
 
     @ManyToMany
     @JoinTable(name = "cards_in_lists", joinColumns = @JoinColumn(name = "card_list_id"), inverseJoinColumns = @JoinColumn(name = "card_id"))
+    @OrderBy("id ASC")
     private List<Card> cards;
 
     @Enumerated
