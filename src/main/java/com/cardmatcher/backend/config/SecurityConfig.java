@@ -49,6 +49,7 @@ public class SecurityConfig {
     .requestMatchers("/api/auth/**").permitAll() // login and register public
     .requestMatchers("/api/cards/**").permitAll() // get cards public
     .requestMatchers("/api/users/**").authenticated() // user actions protected
+    .requestMatchers("/api/cardlists/**").authenticated() // user actions protected
     .anyRequest().authenticated() // all other requests protected
     )
     .sessionManagement(sess ->
