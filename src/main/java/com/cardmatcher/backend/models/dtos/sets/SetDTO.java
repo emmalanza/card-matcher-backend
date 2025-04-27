@@ -1,4 +1,4 @@
-package com.cardmatcher.backend.models.dtos;
+package com.cardmatcher.backend.models.dtos.sets;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,5 +36,8 @@ public class SetDTO {
             this.numOfTotalCards = 0; 
         }
     }
+
+	public SetDTO() {
+	}
 
 }

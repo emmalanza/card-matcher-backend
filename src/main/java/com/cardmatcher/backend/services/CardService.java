@@ -2,17 +2,17 @@ package com.cardmatcher.backend.services;
 
 import com.cardmatcher.backend.models.Card;
 import com.cardmatcher.backend.models.Set;
-import com.cardmatcher.backend.models.dtos.CardDTO;
+import com.cardmatcher.backend.models.dtos.cards.CardDTO;
+import com.cardmatcher.backend.models.dtos.cards.CardResponseDTO;
 import com.cardmatcher.backend.repositories.CardRepository;
 import com.cardmatcher.backend.repositories.SetRepository;
-import com.cardmatcher.backend.utils.RarityMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +33,6 @@ public class CardService {
     }
 
     public void loadCardsFromAPI() {
-
         List<Set> sets = setRepository.findAll();
 
         for (Set set : sets) {
@@ -45,46 +44,77 @@ public class CardService {
                 String url = BASE_URL + setId + "-" + cardNumber;
                 ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
                 String rawJsonResponse = responseEntity.getBody();
-                System.out.println("Raw response from API: " + rawJsonResponse);
 
                 try {
+                    CardDTO cardResponse = objectMapper.readValue(rawJsonResponse, CardDTO.class);
 
-                   CardDTO cardResponse = objectMapper.readValue(rawJsonResponse, CardDTO.class);
+                    if (cardResponse != null) {
+                        Optional<Card> existingCard = cardRepository.findById(cardResponse.getId());
+                        if (existingCard.isEmpty()) {
+                            Card card = new Card();
+                            card.setId(cardResponse.getId());
+                            card.setName(cardResponse.getName());
+                            card.setCategory(cardResponse.getCategory());
+                            card.setImgUrl(cardResponse.getImgUrl());
+                            card.setRarity(Card.Rarity.valueOf(cardResponse.getRarity()));
+                            card.setSet(set);
+                            card.setIsInterchangeable();
 
-                   if (cardResponse != null) {
-                    Optional<Card> existingCard = cardRepository.findById(cardResponse.getId());
-                       if (existingCard.isEmpty()) {
-                           Card card = new Card();
-                           card.setName(cardResponse.getName());
-                           card.setId(cardResponse.getId());
-                           card.setImgUrl(cardResponse.getImgUrl());
-                           card.setCategory(cardResponse.getCategory());
-                            card.setRarity(RarityMapper.mapRarity(cardResponse.getRarity()));
-                           card.setIsInterchangeable(); 
-                           card.setSet(set);
+                            cardRepository.save(card);
+                        } else {
+                            System.out.println("Card " + cardResponse.getId() + " already exists.");
+                        }
+                    } else {
+                        System.out.println("Error loading card with ID: " + setId + "-" + cardNumber);
+                    }
 
-                           cardRepository.save(card);
-                           System.out.println("Card loaded: " + cardResponse.getName());
-                       } else {
-                           System.out.println("Card " + cardResponse.getId() + " already exists.");
-                       }
-                   } else {
-                    System.out.println("Err loading card with ID: " + setId + "-" + cardNumber);
-                   }
-                
                 } catch (Exception e) {
-                    System.err.println("Err getting card with URL: " + url);
+                    System.err.println("Error getting card with URL: " + url);
                     e.printStackTrace();
                 }
             }
         }
     }
 
-    public List<Card> getCardsBySetId(String setId) {
-        return cardRepository.findBySetId(setId);
+    public List<CardResponseDTO> getCardsBySetId(String setId) {
+        List<Card> cards = cardRepository.findBySetId(setId);
+        List<CardResponseDTO> cardResponseDTOs = new ArrayList<>();
+
+        for (Card card : cards) {
+            CardResponseDTO dto = new CardResponseDTO();
+            dto.setId(card.getId());
+            dto.setName(card.getName());
+            dto.setImgUrl(card.getImgUrl());
+            dto.setCategory(card.getCategory());
+            dto.setRarity(card.getRarity().name());
+            dto.setInterchangeable(card.getIsInterchangeable());
+            dto.setSetName(card.getSet().getName());
+
+            cardResponseDTOs.add(dto);
+        }
+
+        return cardResponseDTOs;
     }
 
-    public List<Card> getTradableCards() {
-        return cardRepository.findByIsInterchangeableTrue();
+    public List<CardResponseDTO> getTradableCards() {
+        
+        List<Card> cards = cardRepository.findByIsInterchangeableTrue();
+        List<CardResponseDTO> cardResponseDTOs = new ArrayList<>();
+
+        for (Card card : cards) {
+            CardResponseDTO dto = new CardResponseDTO();
+            dto.setId(card.getId());
+            dto.setName(card.getName());
+            dto.setImgUrl(card.getImgUrl());
+            dto.setCategory(card.getCategory());
+            dto.setRarity(card.getRarity().name());
+            dto.setInterchangeable(card.getIsInterchangeable());
+            dto.setSetName(card.getSet().getName());
+
+            cardResponseDTOs.add(dto);
+        }
+
+        return cardResponseDTOs;
     }
+    
 }
