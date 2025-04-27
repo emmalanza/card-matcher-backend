@@ -1,5 +1,6 @@
 package com.cardmatcher.backend.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -38,7 +39,7 @@ public class CardList {
     @ManyToMany
     @JoinTable(name = "cards_in_lists", joinColumns = @JoinColumn(name = "card_list_id"), inverseJoinColumns = @JoinColumn(name = "card_id"))
     @OrderBy("id ASC")
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();;
 
     @Enumerated
     @Column(nullable = false)

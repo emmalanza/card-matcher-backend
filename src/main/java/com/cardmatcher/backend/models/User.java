@@ -1,29 +1,25 @@
 package com.cardmatcher.backend.models;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "users")
 @Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -39,11 +35,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // @ManyToMany(fetch = FetchType.EAGER)
-    // @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    // @JsonBackReference
-    // private Set<Role> roles = new HashSet<>();
-
     @Column(nullable = false)
     private boolean isActive;
 
@@ -54,5 +45,19 @@ public class User {
     @JsonManagedReference
     private List<CardList> cardLists;
 
-}
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isActive = true;
+        this.cardLists = new ArrayList<>();
+    }
 
+    public void addCardList(CardList cardList) {
+        if (cardLists == null) {
+            cardLists = new ArrayList<>();
+        }
+        cardLists.add(cardList);
+        cardList.setUser(this);
+    }
+}

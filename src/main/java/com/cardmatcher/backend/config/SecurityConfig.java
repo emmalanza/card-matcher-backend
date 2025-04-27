@@ -28,6 +28,8 @@ public class SecurityConfig {
         this.customUserDetailsService = customUserDetailsService;
     }
 
+
+    // uncomment the following method if you want to disable CSRF protection for getting cards and sets from API
     // @Bean
     // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     //     http
