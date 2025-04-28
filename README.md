@@ -2,6 +2,22 @@
 
 Este es el backend de una aplicación llamada **Card Matcher**. El objetivo de esta aplicación es permitir a los usuarios gestionar, intercambiar y coleccionar cartas. Los usuarios pueden registrar su cuenta, iniciar sesión, y organizar sus cartas en listas de tipo "deseadas", "ofrecidas" o "colección".
 
+## Tabla de Contenidos 📋
+
+- [Descripción del Proyecto](#descripción-del-proyecto)
+- [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+  - [Modelos de Datos](#modelos-de-datos)
+  - [Funciones principales](#funciones-principales)
+- [Configuración](#configuración)
+  - [Requisitos previos](#requisitos-previos)
+  - [Variables de Entorno](#variables-de-entorno)
+  - [Paso a paso para ejecutar el proyecto](#paso-a-paso-para-ejecutar-el-proyecto) 
+ 
+## Descripción del Proyecto 📜
+
+Card Matcher Backend es un sistema diseñado para gestionar el intercambio de cartas coleccionables entre usuarios. La aplicación permite registrar, iniciar sesión, y administrar las cartas en colecciones categorizadas como "deseadas", "ofrecidas" o "colección". A través de esta API RESTful, los usuarios pueden gestionar su inventario de cartas, y realizar intercambios utilizando un sistema de autenticación con JWT.
+
 ## Tecnologías Utilizadas ⚙️
 
 - **Java 23** 
